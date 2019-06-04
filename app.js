@@ -14,7 +14,7 @@ app.use(
 app.use((req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
-    return api.utils
+    return api
       .getUserByToken(token)
       .then(user => {
         req.user = user;
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 app.post("/:method", (req, res) => {
   const { method } = req.params;
   const { ctx, body } = req;
-  api.methods[method](ctx, body)
+  api[method](ctx, body)
     .then(response => res.send(response))
     .catch(error => res.send(error));
 });
