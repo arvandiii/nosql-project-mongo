@@ -5,7 +5,7 @@ const validateParams = require("../utils/validateParams");
 const User = mongo.model("User");
 
 const register = async (ctx, params) => {
-  const { username, email, password } = params;
+  const { username, email, password, skills, interests } = params;
   const passwordHash = hash(password);
   const userWithUsername = await User.findOne({ username });
   if (userWithUsername) {
@@ -15,12 +15,14 @@ const register = async (ctx, params) => {
   if (userWithEmail) {
     throw new Error("email exist");
   }
-  await User.create({ username, email, passwordHash });
+  await User.create({ username, email, passwordHash, skills, interests });
   return {};
 };
 
 module.exports = validateParams(register, {
   username: "string",
   email: "string",
-  password: "string"
+  password: "string",
+  interests: "object",
+  skills: "object"
 });
