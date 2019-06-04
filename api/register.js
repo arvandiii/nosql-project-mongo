@@ -16,6 +16,7 @@ const register = async (ctx, params) => {
     throw new Error("email exist");
   }
   await User.create({ username, email, passwordHash });
+  return {};
 };
 
 module.exports = validateParams(register, {
