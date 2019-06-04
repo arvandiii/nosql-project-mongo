@@ -1,5 +1,5 @@
 const express = require("express");
-const api = require("./api");
+const path = require("path");
 const app = express();
 const port = 3000;
 
@@ -27,10 +27,24 @@ app.use((req, res, next) => {
   next();
 });
 
+const api = {};
+const getMethod = method => {
+  if (api[method]) {
+    return api[method];
+  }
+  api[method] = require(path.join(__dirname, "api", method));
+  if (!method) {
+    return async () => {
+      return new Error("method invalid");
+    };
+  }
+  return api[method];
+};
+
 app.post("/api/:method", (req, res) => {
   const { method } = req.params;
   const { ctx, body } = req;
-  api[method](ctx, body)
+  getMethod(method)(ctx, body)
     .then(response => res.send({ res: response }))
     .catch(error => res.send({ err: error.message }));
 });
