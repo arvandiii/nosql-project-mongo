@@ -1,5 +1,5 @@
 const requireAuth = func => {
-  return (context, params) => {
+  return async (context, params) => {
     if (!context.user) {
       throw new Error("function requires authentication");
     }

@@ -27,12 +27,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/:method", (req, res) => {
+app.post("/api/:method", (req, res) => {
   const { method } = req.params;
   const { ctx, body } = req;
   api[method](ctx, body)
-    .then(response => res.send(response))
-    .catch(error => res.send(error));
+    .then(response => res.send({ res: response }))
+    .catch(error => res.send({ err: error.message }));
 });
 
-app.listen(port, () => console.log());
+app.listen(port, () => console.log("server running at ", port));
