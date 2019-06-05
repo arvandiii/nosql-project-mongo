@@ -9,10 +9,22 @@ const updateInfo = async (ctx, params) => {
   const {
     user: { _id: userId }
   } = ctx;
-  await User.findOneAndUpdate(
-    { _id: userId },
-    { $set: { username, email, skills, interests } }
-  );
+  const query = { username, email };
+  if (skills.length) {
+    const skillIds = await Promise.map(skills, async skill => {
+      const { label } = await mergeLabelUtil({ name: skill });
+      return label._id;
+    });
+    Object.assign(query, { skillIds });
+  }
+  if (interestIds.length) {
+    const interestIds = await Promise.map(interests, async interest => {
+      const { label } = await mergeLabelUtil({ name: interest });
+      return label._id;
+    });
+    Object.assign(query, { interestIds });
+  }
+  await User.findOneAndUpdate({ _id: userId }, { $set: query });
   return {};
 };
 

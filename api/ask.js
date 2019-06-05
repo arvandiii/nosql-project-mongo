@@ -1,12 +1,14 @@
 const mongo = require("../utils/mongo");
 const validateParams = require("../utils/validateParams");
-const mergeLabelUtil = require("./utils/mergeLabel");
 
 const Label = mongo.model("Label");
 
 const mergeLabel = async (ctx, params) => {
   const { name } = params;
-  const { label } = await mergeLabelUtil({ name });
+  let label = await Label.findOne({ name });
+  if (!label) {
+    label = await Label.create({ name });
+  }
   return { label };
 };
 
