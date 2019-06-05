@@ -1,6 +1,7 @@
 const mongo = require("../utils/mongo");
 const validateParams = require("../utils/validateParams");
 const requireAuth = require("../utils/requireAuth");
+const getLabelIdsByName = require("./utils/getLabelIdsByName");
 
 const User = mongo.model("User");
 
@@ -11,17 +12,11 @@ const updateInfo = async (ctx, params) => {
   } = ctx;
   const query = { username, email };
   if (skills.length) {
-    const skillIds = await Promise.map(skills, async skill => {
-      const { label } = await mergeLabelUtil({ name: skill });
-      return label._id;
-    });
+    const skillIds = await getLabelIdsByName(skills);
     Object.assign(query, { skillIds });
   }
   if (interestIds.length) {
-    const interestIds = await Promise.map(interests, async interest => {
-      const { label } = await mergeLabelUtil({ name: interest });
-      return label._id;
-    });
+    const interestIds = await getLabelIdsByName(interests);
     Object.assign(query, { interestIds });
   }
   await User.findOneAndUpdate({ _id: userId }, { $set: query });
