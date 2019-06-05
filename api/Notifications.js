@@ -1,8 +1,9 @@
 const validateParams = require("../utils/validateParams");
 const getQuestionsUserMentioned = require("./utils/getQuestionsUserMentioned");
+const requireAuth = require("../utils/requireAuth");
 
-const getNotifications = async (ctx, params) => {
+const notifications = async (ctx, params) => {
   return { mentions: await getQuestionsUserMentioned(ctx.user) };
 };
 
-module.exports = validateParams(getNotifications, {});
+module.exports = requireAuth(validateParams(notifications, {}));
