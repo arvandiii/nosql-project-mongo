@@ -5,6 +5,4 @@ const getNotifications = async (ctx, params) => {
   return { mentions: await getQuestionsUserMentioned(ctx.user) };
 };
 
-module.exports = validateParams(getNotifications, {
-  name: "string"
-});
+module.exports = validateParams(getNotifications, {});
