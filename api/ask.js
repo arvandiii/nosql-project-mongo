@@ -1,5 +1,6 @@
 const mongo = require("../utils/mongo");
 const validateParams = require("../utils/validateParams");
+const requireAuth = require("../utils/requireAuth");
 const Promise = require("bluebird");
 const getLabelByName = require("./utils/getLabelByName");
 
@@ -26,9 +27,11 @@ const ask = async (ctx, params) => {
   return { question };
 };
 
-module.exports = validateParams(ask, {
-  text: "string",
-  labels: "object",
-  mentionIds: "object",
-  questionType: "string"
-});
+module.exports = requireAuth(
+  validateParams(ask, {
+    text: "string",
+    labels: "object",
+    mentionIds: "object",
+    questionType: "string"
+  })
+);

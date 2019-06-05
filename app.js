@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const getUserByToken = require("./api/utils/getUserByToken");
 const app = express();
 const port = 3000;
 
@@ -11,13 +12,12 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
-    return api
-      .getUserByToken(token)
+    return getUserByToken(token)
       .then(user => {
-        req.user = user;
+        req.ctx = { user };
         return next();
       })
       .catch(err => {
@@ -44,6 +44,7 @@ const getMethod = method => {
 app.post("/api/:method", (req, res) => {
   const { method } = req.params;
   const { ctx, body } = req;
+  console.log("api call", method, ctx, body);
   getMethod(method)(ctx, body)
     .then(response => res.send({ res: response }))
     .catch(error => res.send({ err: error.message }));
