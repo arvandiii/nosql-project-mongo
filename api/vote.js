@@ -4,8 +4,6 @@ const requireAuth = require("../utils/requireAuth");
 
 const Vote = mongo.model("Vote");
 
-const mapValue = { up: 1, down: -1 };
-
 const vote = async (ctx, params) => {
   const {
     user: { _id: userId }
@@ -13,7 +11,7 @@ const vote = async (ctx, params) => {
   const { value, questionId } = params;
   await Vote.findOneAndUpdate(
     { userId, questionId },
-    { $set: { value: mapValue[value] } },
+    { $set: { value } },
     { upsert: true }
   );
   return {};
