@@ -5,7 +5,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const schema = new Schema({
   questionId: { type: ObjectId, required: true },
   userId: { type: ObjectId, required: true },
-  value: { type: String, required: true, enum: ["up", "down"] }
+  value: { type: Number, required: true, enum: [1, -1] }
 });
 
 module.exports = schema;
