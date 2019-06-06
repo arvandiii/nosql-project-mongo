@@ -5,7 +5,7 @@ const QuestionMention = mongo.model("QuestionMention");
 const Question = mongo.model("Question");
 
 
-const getQuestionsUserMentioned = async user => {
+const getMentionsNotification = async user => {
   const questionMentions = await QuestionMention.find({ userId: user._id });
   const questions = await Promise.map(
     questionMentions,
@@ -16,4 +16,4 @@ const getQuestionsUserMentioned = async user => {
   return questions;
 };
 
-module.exports = getQuestionsUserMentioned;
+module.exports = getMentionsNotification;
