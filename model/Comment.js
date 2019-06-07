@@ -8,6 +8,7 @@ const schema = new Schema({
   replyTo: { type: ObjectId, required: true },
   mentionUserId: { type: ObjectId, required: true },
   text: { type: String, required: true },
+  createdAt: { type: Date, default: new Date() },
   userId: { type: ObjectId, required: true }
 });
 

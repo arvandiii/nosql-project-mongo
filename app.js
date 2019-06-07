@@ -17,7 +17,7 @@ app.use(async (req, res, next) => {
   if (token) {
     return getUserByToken(token)
       .then(user => {
-        req.ctx = { user };
+        req.ctx = { user, token };
         return next();
       })
       .catch(err => {
