@@ -6,7 +6,7 @@ const getLabelIdsByName = require("./utils/getLabelIdsByName");
 const User = mongo.model("User");
 
 const updateInfo = async (ctx, params) => {
-  const { username, email, skills, interests } = params;
+  const { username, email, skills, interests, password } = params;
   const {
     user: { _id: userId }
   } = ctx;
@@ -18,6 +18,10 @@ const updateInfo = async (ctx, params) => {
   if (interestIds.length) {
     const interestIds = await getLabelIdsByName(interests);
     Object.assign(query, { interestIds });
+  }
+  if (password) {
+    const passwordHash = hash(password);
+    Object.assign(query, { passwordHash });
   }
   await User.findOneAndUpdate({ _id: userId }, { $set: query });
   return {};
