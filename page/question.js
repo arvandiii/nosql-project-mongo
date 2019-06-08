@@ -27,7 +27,14 @@ const questionPage = async (ctx, params) => {
   const { questionId } = params;
   const question = await Question.findOne({ _id: questionId });
   const answers = getAnswers({ questionId });
-  return { question, answers };
+  return {
+    question,
+    answers,
+    user:
+      question.type === "private"
+        ? null
+        : await User.findOne({ _id: question.userId })
+  };
 };
 
 module.exports = questionPage;
