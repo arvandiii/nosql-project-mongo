@@ -13,4 +13,6 @@ const schema = new Schema({
   }
 });
 
+schema.index({ userId: 1 });
+
 module.exports = schema;

@@ -9,4 +9,6 @@ const schema = new Schema({
   value: { type: Number, required: true, enum: ["up", "down"] }
 });
 
+schema.index({ questionId: 1 });
+
 module.exports = schema;

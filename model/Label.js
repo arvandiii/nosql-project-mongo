@@ -6,4 +6,6 @@ const schema = new Schema({
   name: { type: String, required: true }
 });
 
+schema.index({ name: 1 });
+
 module.exports = schema;

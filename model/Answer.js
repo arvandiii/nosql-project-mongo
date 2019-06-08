@@ -10,4 +10,6 @@ const schema = new Schema({
   userId: { type: ObjectId, required: true }
 });
 
+schema.index({ questionId: 1 });
+
 module.exports = schema;
