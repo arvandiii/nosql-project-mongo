@@ -9,6 +9,7 @@
     "crypto": "^1.0.1",
     "express": "^4.17.0",
     "mongoose": "^5.5.11",
+    "nodemailer": "^6.2.1",
     "underscore": "^1.9.1",
     "uuid": "^3.3.2"
   }

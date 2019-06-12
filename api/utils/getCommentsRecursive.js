@@ -8,7 +8,7 @@ const getCommentsRecursive = async ({ objId }) => {
   return Promise.map(comments, async comment => {
     return {
       comment,
-      comments: getCommentsRecursive({ objId: comment._id })
+      comments: await getCommentsRecursive({ objId: comment._id })
     };
   });
 };

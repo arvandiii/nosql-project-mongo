@@ -12,9 +12,9 @@ const comment = async (ctx, params) => {
   const { text, replyTo, type } = params;
   let obj = null;
   if (type === "comment") {
-    obj = Comment.findOne({ _id: replyTo });
+    obj = await Comment.findOne({ _id: replyTo });
   } else {
-    obj = Answer.findOne({ _id: replyTo });
+    obj = await Answer.findOne({ _id: replyTo });
   }
   const commentObj = await Comment.create({
     text,

@@ -17,11 +17,11 @@ const answerPage = async (ctx, params) => {
     question,
     answer,
     votes: {
-      up: await Vote.countDocuments({ questionId, value: "up" }),
-      down: await Vote.countDocuments({ questionId, value: "down" }),
+      up: await Vote.countDocuments({ answerId, value: "up" }),
+      down: await Vote.countDocuments({ answerId, value: "down" }),
       sum:
-        (await Vote.countDocuments({ questionId, value: "up" })) -
-        (await Vote.countDocuments({ questionId, value: "down" }))
+        (await Vote.countDocuments({ answerId, value: "up" })) -
+        (await Vote.countDocuments({ answerId, value: "down" }))
     },
     comments: await getCommentsRecursive({ objId: answer._id }),
     answerer,

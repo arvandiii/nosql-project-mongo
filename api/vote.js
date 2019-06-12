@@ -8,9 +8,9 @@ const vote = async (ctx, params) => {
   const {
     user: { _id: userId }
   } = ctx;
-  const { value, questionId } = params;
+  const { value, answerId } = params;
   await Vote.findOneAndUpdate(
-    { userId, questionId },
+    { userId, answerId },
     { $set: { value } },
     { upsert: true }
   );
@@ -20,6 +20,6 @@ const vote = async (ctx, params) => {
 module.exports = requireAuth(
   validateParams(vote, {
     value: "string",
-    questionId: "string"
+    answerId: "string"
   })
 );

@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const schema = new Schema({
   createdAt: { type: Date, default: new Date() },
-  questionId: { type: ObjectId, required: true },
+  answerId: { type: ObjectId, required: true },
   userId: { type: ObjectId, required: true },
   value: { type: String, required: true, enum: ["up", "down"] }
 });

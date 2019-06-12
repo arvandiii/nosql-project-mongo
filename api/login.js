@@ -17,7 +17,8 @@ const login = async (ctx, params) => {
     throw new Error("password incorrect");
   }
   const token = uuid();
-  UserToken.create({ userId: userWithUsername._id, token });
+  await UserToken.deleteMany({ userId: userWithUsername._id });
+  await UserToken.create({ userId: userWithUsername._id, token });
   return { token };
 };
 

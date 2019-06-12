@@ -12,13 +12,6 @@ const getAnswers = async ({ questionId }) => {
   return Promise.map(answers, async answer => {
     return {
       answer,
-      votes: {
-        up: await Vote.countDocuments({ questionId, value: "up" }),
-        down: await Vote.countDocuments({ questionId, value: "down" }),
-        sum:
-          (await Vote.countDocuments({ questionId, value: "up" })) -
-          (await Vote.countDocuments({ questionId, value: "down" }))
-      },
       comments: await getCommentsRecursive({ objId: answer._id })
     };
   });

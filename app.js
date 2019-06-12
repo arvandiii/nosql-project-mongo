@@ -48,7 +48,10 @@ app.post("/api/:method", (req, res) => {
   console.log("api call", method, ctx, body);
   getMethod(method)(ctx, body)
     .then(response => res.send({ res: response }))
-    .catch(error => res.send({ err: error.message }));
+    .catch(error => {
+      console.log(error);
+      res.send({ err: error.message });
+    });
 });
 
 app.listen(port, () => console.log("server running at ", port));
