@@ -42,7 +42,7 @@ const getMethod = method => {
 };
 
 const page = {};
-const getMethod = pageName => {
+const getPage = pageName => {
   if (page[pageName]) {
     return page[pageName];
   }
