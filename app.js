@@ -13,6 +13,7 @@ app.use(
 );
 
 app.use(async (req, res, next) => {
+  console.log("inja inja", req.headers);
   const token = req.headers.authorization;
   if (token) {
     return getUserByToken(token)
@@ -21,7 +22,7 @@ app.use(async (req, res, next) => {
         return next();
       })
       .catch(err => {
-        return res.send(err);
+        return res.send({ err: err.message });
       });
   }
   next();
@@ -41,34 +42,11 @@ const getMethod = method => {
   return api[method];
 };
 
-const page = {};
-const getPage = pageName => {
-  if (page[pageName]) {
-    return page[pageName];
-  }
-  page[pageName] = require(path.join(__dirname, "page", pageName));
-  if (!pageName) {
-    return async () => {
-      return new Error("pageName invalid");
-    };
-  }
-  return page[pageName];
-};
-
 app.post("/api/:method", (req, res) => {
   const { method } = req.params;
   const { ctx, body } = req;
   console.log("api call", method, ctx, body);
   getMethod(method)(ctx, body)
-    .then(response => res.send({ res: response }))
-    .catch(error => res.send({ err: error.message }));
-});
-
-app.get("/:page", (req, res) => {
-  const { page } = req.params;
-  const { ctx, query } = req;
-  console.log("page", page, ctx, query);
-  getPage(page)(ctx, query)
     .then(response => res.send({ res: response }))
     .catch(error => res.send({ err: error.message }));
 });

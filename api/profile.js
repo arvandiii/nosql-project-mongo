@@ -3,7 +3,8 @@ const _ = require("underscore");
 const Question = mongo.model("Question");
 const Answer = mongo.model("Answer");
 
-const answerPage = async (ctx, params) => {
+const profile = async (ctx, params) => {
+  console.log("omadeeee injaaa");
   const questions = await Question.find({
     userId: ctx.user._id,
     type: "public"
@@ -20,4 +21,4 @@ const answerPage = async (ctx, params) => {
   };
 };
 
-module.exports = answerPage;
+module.exports = profile;

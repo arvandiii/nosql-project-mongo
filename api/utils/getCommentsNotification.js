@@ -1,8 +1,8 @@
 const mongo = require("../../utils/mongo");
-const Comments = mongo.model("Comments");
+const Comment = mongo.model("Comment");
 
 const getCommentsNotification = async user => {
-  const comments = await Comments.find({ mentionUserId: user._id });
+  const comments = await Comment.find({ mentionUserId: user._id });
   return comments;
 };
 

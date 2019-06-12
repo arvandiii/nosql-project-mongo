@@ -5,6 +5,7 @@ const getCommentsRecursive = require("./utils/getCommentsRecursive");
 const Answer = mongo.model("Answer");
 const Question = mongo.model("Question");
 const Vote = mongo.model("Vote");
+const User = mongo.model("User");
 
 const getAnswers = async ({ questionId }) => {
   const answers = await Answer.find({ questionId });
@@ -12,11 +13,11 @@ const getAnswers = async ({ questionId }) => {
     return {
       answer,
       votes: {
-        up: await Vote.count({ questionId, value: "up" }),
-        down: await Vote.count({ questionId, value: "down" }),
+        up: await Vote.countDocuments({ questionId, value: "up" }),
+        down: await Vote.countDocuments({ questionId, value: "down" }),
         sum:
-          (await Vote.count({ questionId, value: "up" })) -
-          (await Vote.count({ questionId, value: "down" }))
+          (await Vote.countDocuments({ questionId, value: "up" })) -
+          (await Vote.countDocuments({ questionId, value: "down" }))
       },
       comments: await getCommentsRecursive({ objId: answer._id })
     };
@@ -26,7 +27,7 @@ const getAnswers = async ({ questionId }) => {
 const questionPage = async (ctx, params) => {
   const { questionId } = params;
   const question = await Question.findOne({ _id: questionId });
-  const answers = getAnswers({ questionId });
+  const answers = await getAnswers({ questionId });
   return {
     question,
     answers,

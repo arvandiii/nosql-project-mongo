@@ -13,9 +13,13 @@ const ask = async (ctx, params) => {
   const {
     user: { _id: userId }
   } = ctx;
+  console.log("inja", ctx);
   const { text, labels, mentions, questionType } = params;
   const question = await Question.create({ userId, text, type: questionType });
+  console.log("inja", question);
   await Promise.map(labels, async label => {
+    console.log("inja label", label, await getLabelByName(label));
+
     const { _id: labelId } = await getLabelByName(label);
     await QuestionLabel.create({ questionId: question._id, labelId });
   });

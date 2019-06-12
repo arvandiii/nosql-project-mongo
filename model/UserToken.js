@@ -8,6 +8,6 @@ const schema = new Schema({
   createdAt: { type: Date, default: new Date() }
 });
 
-schema.index({ createdAt: 1 }, { expireAfterSeconds: 5 * 60 });
+schema.index({ createdAt: 1 }, { expireAfterSeconds: 10 * 5 * 60 });
 
 module.exports = schema;

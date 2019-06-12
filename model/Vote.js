@@ -6,7 +6,7 @@ const schema = new Schema({
   createdAt: { type: Date, default: new Date() },
   questionId: { type: ObjectId, required: true },
   userId: { type: ObjectId, required: true },
-  value: { type: Number, required: true, enum: ["up", "down"] }
+  value: { type: String, required: true, enum: ["up", "down"] }
 });
 
 schema.index({ questionId: 1 });

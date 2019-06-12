@@ -1,4 +1,4 @@
-const mongo = require("../utils/mongo");
+const mongo = require("../../utils/mongo");
 const Promise = require("bluebird");
 
 const Comment = mongo.model("Comment");
